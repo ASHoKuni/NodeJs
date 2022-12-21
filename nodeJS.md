@@ -5,8 +5,7 @@ One of the hardest things for larger applications is to maintain a huge code bas
 
 Like [MVC](https://www.geeksforgeeks.org/mvc-design-pattern/) architecture
 
-![alt text](http://url/to/img.png)
-
+<img title="a title" alt="Alt text" src="Screenshot 2022-12-21 at 12.24.41 PM.png">
 
 
 
@@ -78,7 +77,7 @@ Developers can use available open-source packages like [Joi](https://joi.dev/api
 Code Style Node.js Best Practices
 
 ## Use Linting Packages
-There are many linting tools available, ESLint is one the most popular linting package which is used to check possible errors in code otherwise you can  also check code styles to meet best practices standards. It identifies spacing issues to any potential code patterns that could lead to any security threats as well as possible app-breaking that could occur in the future.
+There are many linting tools available, [ESLint](https://eslint.org/) is one the most popular linting package which is used to check possible errors in code otherwise you can  also check code styles to meet best practices standards. It identifies spacing issues to any potential code patterns that could lead to any security threats as well as possible app-breaking that could occur in the future.
 There are also other tools available that automatically format code and put it in a more readable way. Also, it resolves minor syntax errors like adding semicolons at the end of each statement, etc.
 
 ## Name Your Functions
@@ -112,10 +111,10 @@ We should put required modules at the beginning of the and avoid putting them in
 Use the strict equality operator === instead of weaker abstract equality operator = ==. == will convert two variables to a common type then compare them while === doesn’t type case variables, and ensures that both variables are of the same type and equal.
 Example:
 ```bash
-null == undefined   // true                       null === undefined //false
-true == 'true'    // false			 true === 'true'    // false
-false == undefined  // false		 false === undefined  // false
-'' == '0'           // false			 '' === '0'           // false
+null == undefined   // true                     null === undefined //false
+true == 'true'    // false			true === 'true'    // false
+false == undefined  // false		        false === undefined  // false
+'' == '0'           // false			'' === '0'           // false
 false == '0'        // true			false === '0'        // false
 0 == '0'            // true			0 === '0'            // false
 ' \t\r\n ' == 0     // true			' \t\r\n ' === 0     // false
