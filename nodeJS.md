@@ -1,6 +1,6 @@
 # Node.JS Project Structure Best Practices
 
-## Divided your solution into components
+## Divided Your Solution Into Components
 One of the hardest things for larger applications is to maintain a huge code base with tons of dependencies. This slows down production and development while adding new features. According to [Node.js](https://nodejs.org/en/) best practices, we should divide the entire codebase into smaller components so that each module gets its own folder, and certain that each module is kept simple and small.
 
 Like [MVC](https://www.geeksforgeeks.org/mvc-design-pattern/) architecture
@@ -10,12 +10,12 @@ Like [MVC](https://www.geeksforgeeks.org/mvc-design-pattern/) architecture
 
 
 
-## Layering components
+## Layering Components
 
 Layering is important and thus each component is designed to have ‘layers’. As a node.js best practices, these layers have a dedicated object that can be used on the web, logic, and data access code. By doing this, it can make a clean separation of performance issues and can significantly differentiate processes from mock and test codes.
 Many developers mix the layers by passing the layer objects ([Express](https://expressjs.com/) req, res) to the Service layer and data layers. This makes your application tightly coupled. your app performance is tightly coupled.
 
-## Use ``` npm init ```for a new project
+## Use ``` npm init ``` for a New Project
 
 ```npm init``` will automatically generate a package.json file for your project that shows all the packages/node app of npm install has the information of your project.
 
@@ -32,29 +32,25 @@ Now you need to specify an engine’s key with the currently installed version o
 
 ```
 
-https://gist.github.com/ASHoKuni/c9f7ae749248070c32da33fa895447e7#file-npm_init_for_a_new_project-txt
-
 ## Separate express ‘app’ and ‘server’
 
 The most common mistake that many developers do in any project is to define the entire express application process on  huge files. Instead of doing that, we should separate the ‘[Express](https://expressjs.com/)’ definition into at least two different files. One for the API declaration (app.js) and another one for the network concerns. We can also locate our API declarations within multiple components.
 Avoiding Garbage in-app
 
 Node js has a default limit of 1.5 GB Single CPU core  as process manager but still, it uses a greedy and lazy garbage collector. It waits until the memory usage is reached and gets recovered on its own.If you want to gain more control over the garbage collector then we can set the flags on V8.
-        
-	```bash
+```
          web: node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js
-         ```
+```
 You can also otherwise try to run the application using the Docker image. This is important if the app is running in an environment with less than 1.5 GB of available memory usage. For example, if you’d like to tailor a node.js to a 512 MB container, try:
-        
-	 ```bash
+```bash
           web: node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js
-          ```
+```
 # Error Handling of the App
 
 ## Using Async-Await or Promises
 Good development practices say to use javascript ‘synchronous function’ for multiple callbacks inside promises to handle async error; this process results in a callback hell problem. We can take a look at the available libraries or async and await of javascript to overcome this performance issue. The process manager will use the promises function to catch code error. It reduces code complexity and makes code more readable.
 Code Example –  use promises
-		```python
+```bash
 		return A()
 		  .then((a) => B(a))
 		  .then((b) => C(b))
@@ -72,14 +68,13 @@ Code Example –  use promises
 		  catch(error) {
 		    logger.error(error);
 		  }
-		```
-https://gist.github.com/ASHoKuni/645436461d677c4301b75ee992c4d4b7#file-gistfile1-txt
+```
 
 ## Handling Errors Centrally
 Every logic that handles errors like logging performance , sending mails regarding error should be written in such a way so that all APIs, night-jobs, unit testing can debug messages and call this method whenever any error occurs.
 
 ## Validating Request Body
-Developers can use available open-source packages like Joi to ensure the request body is proper and does not contain any malicious content. We can validate all the request parameters and body parameters to meet the expected schema before executing actual logic. By doing so we can throw an error to the user input that the requested body is not valid before executing actual logic.
+Developers can use available open-source packages like [Joi](https://joi.dev/api/?v=17.7.0) to ensure the request body is proper and does not contain any malicious content. We can validate all the request parameters and body parameters to meet the expected schema before executing actual logic. By doing so we can throw an error to the user input that the requested body is not valid before executing actual logic.
 Code Style Node.js Best Practices
 
 ## Use Linting Packages
@@ -103,6 +98,7 @@ const conf = {
 let variableExample = 'value';
 function foo(){}
 ```
+
 ## Use Const Over Let, Do Not Use Var
 Const variables assigned cannot be changed, this will help you prevent the use of a single variable multiple times so that way we can keep our code clean. In some scenarios where we need to re-assign variables, we will use the let keyword. For example, in a loop, if we want to re-declare variable value we can use let.
 Apart from this, “let variables” have blocked the scope, meaning they are accessible inside of a particular block where they are declared. Variables declared using var can be used anywhere inside the function.
