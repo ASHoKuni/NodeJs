@@ -1,22 +1,25 @@
 # Node.JS Project Structure Best Practices
+
 ## Divided your solution into components
-One of the hardest things for larger applications is to maintain a huge code base with tons of dependencies. This slows down production and development while adding new features. According to Node.js best practices, we should divide the entire codebase into smaller components so that each module gets its own folder, and certain that each module is kept simple and small.
+One of the hardest things for larger applications is to maintain a huge code base with tons of dependencies. This slows down production and development while adding new features. According to [Node.js](https://nodejs.org/en/) best practices, we should divide the entire codebase into smaller components so that each module gets its own folder, and certain that each module is kept simple and small.
 
-Like MVC architecture
-	
+Like [MVC](https://www.geeksforgeeks.org/mvc-design-pattern/) architecture
+
+![alt text](http://url/to/img.png)
 
 
 
 
-## Layering Components
+## Layering components
 
 Layering is important and thus each component is designed to have ‘layers’. As a node.js best practices, these layers have a dedicated object that can be used on the web, logic, and data access code. By doing this, it can make a clean separation of performance issues and can significantly differentiate processes from mock and test codes.
-Many developers mix the layers by passing the layer objects (Express req, res) to the Service layer and data layers. This makes your application tightly coupled. your app performance is tightly coupled.
+Many developers mix the layers by passing the layer objects ([Express](https://expressjs.com/) req, res) to the Service layer and data layers. This makes your application tightly coupled. your app performance is tightly coupled.
 
-## Use npm init for a New Project
+## Use ``` npm init ```for a new project
 
-Npm init will automatically generate a package.json file for your project that shows all the packages/node app of npm install has the information of your project.
-```bash
+```npm init``` will automatically generate a package.json file for your project that shows all the packages/node app of npm install has the information of your project.
+
+```
 $ mkdir demo-node app
 $ cd demo-node app
 $ npm init –yes
@@ -31,44 +34,45 @@ Now you need to specify an engine’s key with the currently installed version o
 
 https://gist.github.com/ASHoKuni/c9f7ae749248070c32da33fa895447e7#file-npm_init_for_a_new_project-txt
 
-## Separate Express ‘app’ and ‘server’
+## Separate express ‘app’ and ‘server’
 
-The most common mistake that many developers do in any project is to define the entire express application process on  huge files. Instead of doing that, we should separate the ‘Express’ definition into at least two different files. One for the API declaration (app.js) and another one for the network concerns. We can also locate our API declarations within multiple components.
+The most common mistake that many developers do in any project is to define the entire express application process on  huge files. Instead of doing that, we should separate the ‘[Express](https://expressjs.com/)’ definition into at least two different files. One for the API declaration (app.js) and another one for the network concerns. We can also locate our API declarations within multiple components.
 Avoiding Garbage in-app
 
 Node js has a default limit of 1.5 GB Single CPU core  as process manager but still, it uses a greedy and lazy garbage collector. It waits until the memory usage is reached and gets recovered on its own.If you want to gain more control over the garbage collector then we can set the flags on V8.
-         ```bash
-         command: node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js
+        
+	```bash
+         web: node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js
          ```
 You can also otherwise try to run the application using the Docker image. This is important if the app is running in an environment with less than 1.5 GB of available memory usage. For example, if you’d like to tailor a node.js to a 512 MB container, try:
-          ```bash
-          command: node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js
+        
+	 ```bash
+          web: node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js
           ```
-## Error Handling of the App
+# Error Handling of the App
 
-Using Async-Await or Promises
-	Good development practices say to use javascript ‘synchronous function’ for multiple callbacks inside promises to handle async error; this process results in a callback hell problem. We can take a look at the available libraries or async and await of javascript to overcome this performance issue. The process manager will use the promises function to catch code error. It reduces code complexity and makes code more readable.
-
+## Using Async-Await or Promises
+Good development practices say to use javascript ‘synchronous function’ for multiple callbacks inside promises to handle async error; this process results in a callback hell problem. We can take a look at the available libraries or async and await of javascript to overcome this performance issue. The process manager will use the promises function to catch code error. It reduces code complexity and makes code more readable.
 Code Example –  use promises
-```bash
-return A()
-  .then((a) => B(a))
-  .then((b) => C(b))
-  .then((c) => D(c))
-  .catch((error) => logger.error(error))
-  .then(E())
-Code Example - using async/await to catch errors
-async function E() {
-  try {
-    const a= await A();
-    const b= await B(a);
-    const c= await C(c);
-    return await D(c);
-  }
-  catch(error) {
-    logger.error(error);
-  }
-```
+		```python
+		return A()
+		  .then((a) => B(a))
+		  .then((b) => C(b))
+		  .then((c) => D(c))
+		  .catch((error) => logger.error(error))
+		  .then(E())
+		Code Example - using async/await to catch errors
+		async function E() {
+		  try {
+		    const a= await A();
+		    const b= await B(a);
+		    const c= await C(c);
+		    return await D(c);
+		  }
+		  catch(error) {
+		    logger.error(error);
+		  }
+		```
 https://gist.github.com/ASHoKuni/645436461d677c4301b75ee992c4d4b7#file-gistfile1-txt
 
 ## Handling Errors Centrally
@@ -108,6 +112,7 @@ The process manager is a simple command-line interface that keeps the inflow of 
 We should put required modules at the beginning of the and avoid putting them in the middle of the function. By doing this we can easily identify dependencies of the entire file and avoid some of the potential performance issues.
 
 ## Use of Strict Equality Operator (===)
+
 Use the strict equality operator === instead of weaker abstract equality operator = ==. == will convert two variables to a common type then compare them while === doesn’t type case variables, and ensures that both variables are of the same type and equal.
 Example:
 ```bash
