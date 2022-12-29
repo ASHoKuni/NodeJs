@@ -51,7 +51,7 @@ First create a test/unit  folder in your project directory.
 
 As per below screenshot.
 
-<img title="a title" alt="Alt text" src="../APITest/images/test.png">
+<img title="a title" alt="Alt text" src="../APITest/images/test.png" width="200" height="400">
  
 #### Setup  Packages 
 * [Jest](https://jestjs.io/)
@@ -267,13 +267,13 @@ npm  test
 ```
 Once complete, the test results will be immediately visible on the terminal.
 
-<img title="a title" alt="Alt text" src="../APITest/images/console1.png">
+<img title="a title" alt="Alt text" src="../APITest/images/console1.png" width="200" height="400">
 
-<img title="a title" alt="Alt text" src="../APITest/images/console2.png">
+<img title="a title" alt="Alt text" src="../APITest/images/console2.png" width="200" height="400">
 
  
 **Test results HTML report is also generated as index.html under jest-stare/**
-<img title="a title" alt="Alt text" src="../APITest/images/testResult.png">
+<img title="a title" alt="Alt text" src="../APITest/images/testResult.png" width="200" height="400">
 
  
 And test coverage details are created under 
@@ -281,7 +281,7 @@ And test coverage details are created under
  in the workspace. 
 **coverageDirectory** path you can add in **jest.config.js** file.
 
-<img title="a title" alt="Alt text" src="../APITest/images/cover.png">
+<img title="a title" alt="Alt text" src="../APITest/images/cover.png" width="200" height="400">
  
 
 All done!
