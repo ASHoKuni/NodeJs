@@ -32,35 +32,42 @@ There are three most used packages in api testing are.
 [Chai](https://www.npmjs.com/package/chai) vs [jest](https://www.npmjs.com/package/jest) vs [mocha](https://www.npmjs.com/package/mocha) 
 <img title="a title" alt="Alt text" src="../APITest/images/diff.png">
 
-We can overcome such annoyance and meet our purpose using a self-built Jest framework using SuperTest.
-Why Jest?
+We can overcome such annoyance and meet our purpose using a self-built [Jest](https://www.npmjs.com/package/jest) framework using [SuperTest]().
+
+#### Why Jest?
 Jest is pretty impressive. 
-High performance
-Easy and minimal setup
-Provides in-built assertion library and mocking support
-Several in-built testing features without any additional configuration
-Snapshot testing
-Brilliant test coverage
-Allows interactive watch mode ( jest --watch or jest --watchAll )
-Hold on. Before moving forward, let’s quickly visit Jest configurations, Jest CLI commands, Jest Globals and Javascript async/await for better understanding of the coming content.
+* High performance
+* Easy and minimal setup
+* Provides in-built assertion library and mocking support
+* Several in-built testing features without any additional configuration
+* Snapshot testing
+* Brilliant test coverage
+* Allows interactive watch mode ( jest --watch or jest --watchAll )
+
+Hold on. Before moving forward, let’s quickly visit [Jest configurations](), [Jest CLI commands](), [Jest Globals]() and [Javascript async/await]() for better understanding of the coming content.
+
 We consider as you already created the project (npm init).
+
 First create a test/unit  folder in your project directory.
+
 As per below screenshot.
 
+<img title="a title" alt="Alt text" src="../APITest/images/test.png">
  
-Setup  Packages 
-Jest 
-jest-stare
-Jest-serial-runner 
+#### Setup  Packages 
+* Jest 
+* jest-stare
+* Jest-serial-runner 
+
 We install these packages under  devDependencies. You can see it in the package.json file.
 
 ```
 npm install jest jest-stare jest-serial-runner --save-dev
- 
 ```
- 
-Tags to the scripts block in our package.json. 
-```bash
+
+Tags to the scripts block in our package.json
+
+```javascript
 "scripts": {
     "start": "nodemon --ignore 'swagger.js'  index.js",
     "start-gendoc": "node swagger.js",
@@ -70,23 +77,26 @@ Tags to the scripts block in our package.json.
  ```
  
 “test” and “test:watch” should be added.
+
 npm run test command will invoke the test parameter with the following:
-NODE_TLS_REJECT_UNAUTHORIZED=0: ignores the SSL certificate
-jest: runs the framework with the configurations defined under Jest block
---reporters: default jest-stare 
---coverage: invokes test coverage
---detectOpenHandles: for debugging
---runInBand: serial execution of Jest tests
---forceExit: to shut down cleanly
---testTimeout = 60000 (custom timeout, default is 5000 milliseconds)
+
+* NODE_TLS_REJECT_UNAUTHORIZED=0: ignores the SSL certificate
+* jest: runs the framework with the configurations defined under Jest block
+* --reporters: default jest-stare 
+* --coverage: invokes test coverage
+* --detectOpenHandles: for debugging
+* --runInBand: serial execution of Jest tests
+* --forceExit: to shut down cleanly
+* --testTimeout = 60000 (custom timeout, default is 5000 milliseconds)
+* --config ./jest.config.js : We use jest config file
+
  
- 
- 
- 
-Jest configurations:
-Note: This is customizable as per requirements.
+
+### Jest configurations:
+#### Note: This is customizable as per requirements.
 Create a jest.config.js file in your project directory. We are using the jest.config.js file in the test script in package.json.  
-```
+
+```javascript
 module.exports = {
     testEnvironment: 'node',
     moduleFileExtensions: [
@@ -112,16 +122,17 @@ module.exports = {
 };
  
 ```
-Testing endpoints with SuperTest
-SuperTest is a node library, superagent driven, to extensively test Restful web services. It hits the HTTP server to send requests (GET, POST, PATCH, PUT, DELETE ) and fetch responses.
+#### Testing endpoints with SuperTest
+[SuperTest](https://www.npmjs.com/package/supertest) is a node library, [superagent](https://www.npmjs.com/package/superagent) driven, to extensively test Restful web services. It hits the HTTP server to send requests (GET, POST, PATCH, PUT, DELETE ) and fetch responses.
  
 Install SuperTest and save it as a dependency.
 
 ```bash
 npm install supertest --save-dev
 ```
+See your package.json  
 
-```bash
+``` javascript
 "devDependencies": {
     "jest": "^29.3.1",
     "jest-serial-runner": "^1.2.1",
@@ -130,16 +141,20 @@ npm install supertest --save-dev
   }
 ```
 Now we are ready to create our Jest tests with some defined conventions:
-describe block - assembles multiple tests or its
-test block - (an alias usually used is ‘it’) holds single test 
-expect() -  performs assertions 
+
+* describe block - assembles multiple tests or its
+* test block - (an alias usually used is ‘it’) holds single test 
+* expect() -  performs assertions 
+
 It recognizes the test files in test/ folder
-with .test.js extension
-with .spec.js extension
+* with .test.js extension
+* with .spec.js extension
+
 We are testing on POST, GET, PUT and DELETE request api.
+
 Let’s write tests.test.js file. 
  
-``` bash
+``` javascript
 process.env.NODE_ENV = "test";
 const supertest = require("supertest");
 const { response } = require("../../index");
@@ -149,7 +164,6 @@ const app = require("../../index");
 const inputData = require("./inputdata");
 const { deleteOne } = require("../../model/role");
 const { disconnect } = require("mongoose");
- 
  
 let token;
 describe("Role API's Testing : ", () => {
@@ -169,8 +183,6 @@ describe("Role API's Testing : ", () => {
   afterAll(async () => {
     await mongoose.disconnect(); 
   });
- 
- 
  
   describe("GET /api/getRoles", () => {
     test("it should get all the roles", async () => {
@@ -249,23 +261,29 @@ describe("Role API's Testing : ", () => {
  
  
 ```
-
 Save the file in the test/unit folder.
 And we are done with setting up a decent framework and just a command away!
+
 ```bash
 npm  test 
 ```
 Once complete, the test results will be immediately visible on the terminal.
 
+<img title="a title" alt="Alt text" src="../APITest/images/console1.png">
+
+<img title="a title" alt="Alt text" src="../APITest/images/console2.png">
 
  
 Test results HTML report is also generated as index.html under jest-stare/ 
+<img title="a title" alt="Alt text" src="../APITest/images/testResult.png">
 
  
 And test coverage details are created under 
 coverageDirectory: "/Users/xxxx/Documents/nodejs/test/",
  in the workspace. 
 coverageDirectory path you can add in jest.config.js file.
+
+<img title="a title" alt="Alt text" src="../APITest/images/cover.png">
  
 
 All done!
