@@ -28,8 +28,10 @@ To attain the goal, why not develop your own asset rather than relying on the re
 
 There are **three** most used packages in api testing are. 
  
-[Chai](https://www.npmjs.com/package/chai) vs [jest](https://www.npmjs.com/package/jest) vs [mocha](https://www.npmjs.com/package/mocha) 
-<img title="a title" alt="Alt text" src="../APITest/images/diff.png" style=" width:60px ; height:60px " >
+ **[Chai](https://www.npmjs.com/package/chai) vs [jest](https://www.npmjs.com/package/jest) vs [mocha](https://www.npmjs.com/package/mocha)**
+ 
+<br/>
+<img src="../APITest/images/diff.png" style=" width:50% ; height:50% " >
 
 We can overcome such annoyance and meet our purpose using a self-built **[Jest](https://www.npmjs.com/package/jest) framework using [SuperTest](https://www.npmjs.com/package/superset)**.
 
@@ -51,7 +53,7 @@ First create a test/unit  folder in your project directory.
 
 As per below screenshot.
 
-<img title="a title" alt="Alt text" src="../APITest/images/test.png" width="100%" height="50%">
+<img src="../APITest/images/test.png" style=" width:50% ; height:20% ">
  
 #### Setup  Packages 
 * [Jest](https://jestjs.io/)
@@ -151,7 +153,7 @@ It recognizes the test files in test/ folder
 
 We are testing on POST, GET, PUT and DELETE request api.
 
-Let’s write **tests.test.js** file. 
+Let’s write **tests.test.js** file.  [Complete source code ]()
  
 ``` javascript
 process.env.NODE_ENV = "test";
@@ -263,17 +265,17 @@ Save the file in the test/unit folder.
 And we are done with setting up a decent framework and just a command away!
 
 ```bash
-npm  test 
+npm test 
 ```
 Once complete, the test results will be immediately visible on the terminal.
 
-<img title="a title" alt="Alt text" src="../APITest/images/console1.png" width="80%" height="80%">
+<img  src="../APITest/images/console1.png" style=" width:50% ; height:50% ">
 
-<img title="a title" alt="Alt text" src="../APITest/images/console2.png" width="80%" height="80%">
+<img  src="../APITest/images/console2.png" style=" width:50% ; height:50% ">
 
  
 **Test results HTML report is also generated as index.html under jest-stare/**
-<img title="a title" alt="Alt text" src="../APITest/images/testResult.png" width="100%" height="10%">
+<img title="a title" alt="Alt text" src="../APITest/images/testResult.png" style=" width:50% ; height:20% ">
 
  
 And test coverage details are created under 
@@ -281,7 +283,7 @@ And test coverage details are created under
  in the workspace. 
 **coverageDirectory** path you can add in **jest.config.js** file.
 
-<img title="a title" alt="Alt text" src="../APITest/images/cover.png" width="80%" height="80%">
+<img title="a title" alt="Alt text" src="../APITest/images/cover.png" style=" width:50% ; height:20% ">
  
 
 All done!
