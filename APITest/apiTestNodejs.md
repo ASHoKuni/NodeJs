@@ -1,6 +1,6 @@
 # API Testing Framework With Jest And SuperTest
 
-Focus on API testing
+### Focus on API testing
 Before starting off, below listed are the reasons why API testing should be encouraged:
 * Identifies bugs before it goes to UI
 * Effective testing at a lower level over high-level broad-stack testing
@@ -26,15 +26,14 @@ To attain the goal, why not develop your own asset rather than relying on the re
 3. Freedom to add configurations and libraries as required and not really depend on the specific supported plugins of the tool
 4. No limit on the usage and no question of cost
 
-
-There are three most used packages in api testing are. 
+There are **three** most used packages in api testing are. 
  
 [Chai](https://www.npmjs.com/package/chai) vs [jest](https://www.npmjs.com/package/jest) vs [mocha](https://www.npmjs.com/package/mocha) 
 <img title="a title" alt="Alt text" src="../APITest/images/diff.png">
 
-We can overcome such annoyance and meet our purpose using a self-built [Jest](https://www.npmjs.com/package/jest) framework using [SuperTest]().
+We can overcome such annoyance and meet our purpose using a self-built **[Jest](https://www.npmjs.com/package/jest) framework using [SuperTest](https://www.npmjs.com/package/superset)**.
 
-#### Why Jest?
+### Why Jest?
 Jest is pretty impressive. 
 * High performance
 * Easy and minimal setup
@@ -44,7 +43,7 @@ Jest is pretty impressive.
 * Brilliant test coverage
 * Allows interactive watch mode ( jest --watch or jest --watchAll )
 
-Hold on. Before moving forward, let’s quickly visit [Jest configurations](), [Jest CLI commands](), [Jest Globals]() and [Javascript async/await]() for better understanding of the coming content.
+Hold on. Before moving forward, let’s quickly visit **[Jest configurations](https://jest-bot.github.io/jest/docs/configuration.html), [Jest CLI commands](https://jestjs.io/docs/en/cli.html), [Jest Globals](https://jestjs.io/docs/en/api) and [Javascript async/await](https://javascript.info/async-await)** for better understanding of the coming content.
 
 We consider as you already created the project (npm init).
 
@@ -55,11 +54,11 @@ As per below screenshot.
 <img title="a title" alt="Alt text" src="../APITest/images/test.png">
  
 #### Setup  Packages 
-* Jest 
-* jest-stare
-* Jest-serial-runner 
+* [Jest](https://jestjs.io/)
+* [jest-stare](https://www.npmjs.com/package/jest-stare)
+* [Jest-serial-runner](https://www.npmjs.com/package/jest-serial-runner)
 
-We install these packages under  devDependencies. You can see it in the package.json file.
+We install these packages under  **devDependencies. You can see it in the package.json** file.
 
 ```
 npm install jest jest-stare jest-serial-runner --save-dev
@@ -78,7 +77,7 @@ Tags to the scripts block in our package.json
  
 “test” and “test:watch” should be added.
 
-npm run test command will invoke the test parameter with the following:
+**npm run test** command will invoke the test parameter with the following:
 
 * NODE_TLS_REJECT_UNAUTHORIZED=0: ignores the SSL certificate
 * jest: runs the framework with the configurations defined under Jest block
@@ -94,7 +93,7 @@ npm run test command will invoke the test parameter with the following:
 
 ### Jest configurations:
 #### Note: This is customizable as per requirements.
-Create a jest.config.js file in your project directory. We are using the jest.config.js file in the test script in package.json.  
+Create a **jest.config.js** file in your project directory. We are using the jest.config.js file in the test script in package.json.  
 
 ```javascript
 module.exports = {
@@ -122,7 +121,7 @@ module.exports = {
 };
  
 ```
-#### Testing endpoints with SuperTest
+### Testing endpoints with SuperTest
 [SuperTest](https://www.npmjs.com/package/supertest) is a node library, [superagent](https://www.npmjs.com/package/superagent) driven, to extensively test Restful web services. It hits the HTTP server to send requests (GET, POST, PATCH, PUT, DELETE ) and fetch responses.
  
 Install SuperTest and save it as a dependency.
@@ -152,7 +151,7 @@ It recognizes the test files in test/ folder
 
 We are testing on POST, GET, PUT and DELETE request api.
 
-Let’s write tests.test.js file. 
+Let’s write **tests.test.js** file. 
  
 ``` javascript
 process.env.NODE_ENV = "test";
@@ -178,7 +177,6 @@ describe("Role API's Testing : ", () => {
       });
       
   });
- 
  
   afterAll(async () => {
     await mongoose.disconnect(); 
@@ -274,14 +272,14 @@ Once complete, the test results will be immediately visible on the terminal.
 <img title="a title" alt="Alt text" src="../APITest/images/console2.png">
 
  
-Test results HTML report is also generated as index.html under jest-stare/ 
+**Test results HTML report is also generated as index.html under jest-stare/**
 <img title="a title" alt="Alt text" src="../APITest/images/testResult.png">
 
  
 And test coverage details are created under 
-coverageDirectory: "/Users/xxxx/Documents/nodejs/test/",
+**coverageDirectory: "/Users/xxxx/Documents/nodejs/test/",**
  in the workspace. 
-coverageDirectory path you can add in jest.config.js file.
+**coverageDirectory** path you can add in **jest.config.js** file.
 
 <img title="a title" alt="Alt text" src="../APITest/images/cover.png">
  
