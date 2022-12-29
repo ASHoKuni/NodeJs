@@ -144,6 +144,7 @@ The Arrow functions make the code more compact and keep the lexical context of t
 ## Include 3 Parts in each test name 
 
 **Do**: A test report should tell whether the current application revision satisfies the requirements for the people who are not necessarily familiar with the code: the tester, the DevOps engineer who is deploying and the future you two years from now. This can be achieved best if the tests speak at the requirements level and include 3 parts:
+<img src="../NodeJS Best Practices/images/aaa.png" style=" width:30% ; height:30% ">
 
 1. What is being tested? For example, the ProductsService.addNewProduct method
 2. Under what circumstances and scenario? For example, no price is passed to the method
@@ -338,7 +339,7 @@ npm install --save-dev eslint-plugin-security
 ```
     npm audit 
 ```
-  <img src="" style="">
+  <img src="../NodeJS Best Practices/images/audit.png" style=" width:30% ; height:30% ">
   
 3. Fix the vulnerability using below command 
 ```
