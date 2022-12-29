@@ -1,4 +1,4 @@
-# Node.JS Project Structure Best Practices
+# Node.JS Best Practices
 
 ## Divided Your Solution Into Components
 One of the hardest things for larger applications is to maintain a huge code base with tons of dependencies. This slows down production and development while adding new features. According to [Node.js](https://nodejs.org/en/) best practices, we should divide the entire codebase into smaller components so that each module gets its own folder, and certain that each module is kept simple and small.
