@@ -29,7 +29,7 @@ To attain the goal, why not develop your own asset rather than relying on the re
 There are **three** most used packages in api testing are. 
  
 [Chai](https://www.npmjs.com/package/chai) vs [jest](https://www.npmjs.com/package/jest) vs [mocha](https://www.npmjs.com/package/mocha) 
-<img title="a title" alt="Alt text" src="../APITest/images/diff.png">
+<img title="a title" alt="Alt text" src="../APITest/images/diff.png" style=" width:60px ; height:60px " >
 
 We can overcome such annoyance and meet our purpose using a self-built **[Jest](https://www.npmjs.com/package/jest) framework using [SuperTest](https://www.npmjs.com/package/superset)**.
 
