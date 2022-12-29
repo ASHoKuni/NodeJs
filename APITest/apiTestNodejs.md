@@ -1,26 +1,36 @@
-#API Testing Framework With Jest And SuperTest
+# API Testing Framework With Jest And SuperTest
 
 Focus on API testing
 Before starting off, below listed are the reasons why API testing should be encouraged:
-Identifies bugs before it goes to UI
-Effective testing at a lower level over high-level broad-stack testing
-Reduces future efforts to fix defects
-Time-saving
+* Identifies bugs before it goes to UI
+* Effective testing at a lower level over high-level broad-stack testing
+* Reduces future efforts to fix defects
+* Time-saving
+<br/>
+
 Well, QA practices are becoming more automation-centric with evolving requirements, but identifying the appropriate approach is the primary and the most essential step. This implies choosing a framework or a tool to develop a test setup which should be:
-Scalable 
-Modular
-Maintainable
-Able to provide maximum test coverage
-Extensible
-Able to generate test reports
-Easy to integrate with source control tool and CI pipeline
-To attain the goal, why not develop your own asset rather than relying on the ready-made tools like Postman, JMeter, or any? Let’s have a look at why you should choose ‘writing your own code’ over depending on the API testing tools available in the market:
-Customizable
-Saves you from the trap of limitations of a ready-made tool
-Freedom to add configurations and libraries as required and not really depend on the specific supported plugins of the tool
-No limit on the usage and no question of cost
+
+* Scalable 
+* Modular
+* Maintainable
+* Able to provide maximum test coverage
+* Extensible
+* Able to generate test reports
+* Easy to integrate with source control tool and CI pipeline
+
+To attain the goal, why not develop your own asset rather than relying on the ready-made tools like [Postman](https://www.postman.com/), [JMeter](https://jmeter.apache.org/), or any? Let’s have a look at why you should choose ‘writing your own code’ over depending on the API testing tools available in the market:
+
+
+1. Customizable
+2. Saves you from the trap of limitations of a ready-made tool
+3. Freedom to add configurations and libraries as required and not really depend on the specific supported plugins of the tool
+4. No limit on the usage and no question of cost
+
+
 There are three most used packages in api testing are. 
- Chai vs jest vs mocha
+ 
+[Chai](https://www.npmjs.com/package/chai) vs [jest](https://www.npmjs.com/package/jest) vs [mocha](https://www.npmjs.com/package/mocha) 
+<img title="a title" alt="Alt text" src="../APITest/images/diff.png">
 
 We can overcome such annoyance and meet our purpose using a self-built Jest framework using SuperTest.
 Why Jest?
