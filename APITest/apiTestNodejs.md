@@ -273,7 +273,7 @@ Once complete, the test results will be immediately visible on the terminal.
 
  
 **Test results HTML report is also generated as index.html under jest-stare/**
-<img title="a title" alt="Alt text" src="../APITest/images/testResult.png" width="100%" height="50%">
+<img title="a title" alt="Alt text" src="../APITest/images/testResult.png" width="100%" height="10%">
 
  
 And test coverage details are created under 
