@@ -49,24 +49,24 @@ You can also otherwise try to run the application using the Docker image. This i
 ## Using Async-Await or Promises
 Good development practices say to use javascript ‘synchronous function’ for multiple callbacks inside promises to handle async error; this process results in a callback hell problem. We can take a look at the available libraries or async and await of javascript to overcome this performance issue. The process manager will use the promises function to catch code error. It reduces code complexity and makes code more readable.
 Code Example –  use promises
-```bash
-		return A()
-		  .then((a) => B(a))
-		  .then((b) => C(b))
-		  .then((c) => D(c))
-		  .catch((error) => logger.error(error))
-		  .then(E())
-		Code Example - using async/await to catch errors
-		async function E() {
-		  try {
-		    const a= await A();
-		    const b= await B(a);
-		    const c= await C(c);
-		    return await D(c);
-		  }
-		  catch(error) {
-		    logger.error(error);
-		  }
+```javascript
+return A()
+  .then((a) => B(a))
+  .then((b) => C(b))
+  .then((c) => D(c))
+  .catch((error) => logger.error(error))
+  .then(E())
+Code Example - using async/await to catch errors
+async function E() {
+  try {
+    const a= await A();
+    const b= await B(a);
+    const c= await C(c);
+    return await D(c);
+  }
+  catch(error) {
+    logger.error(error);
+  }
 ```
 
 ## Handling Errors Centrally
@@ -86,7 +86,7 @@ Proper Naming Conventions for Constants, Variables, Functions, and Classes
 As a standard best practice, we should use all constants, functions, variables, and class names in lowercase when we declare them. Also, we should not use any short forms instead use only full forms that are easily understandable by everyone using it. We should use an underscore between two words.
 Code Example:
 
-```bash
+```javascript
 // for class name we use Uppercase
 class MyClassExample {}
 // Use the const keyword and lowercase
@@ -110,7 +110,7 @@ We should put required modules at the beginning of the and avoid putting them in
 
 Use the strict equality operator === instead of weaker abstract equality operator = ==. == will convert two variables to a common type then compare them while === doesn’t type case variables, and ensures that both variables are of the same type and equal.
 Example:
-```bash
+```javascript
 null == undefined   // true                    
 true == 'true'    // false			      
 false == undefined  // false		        
@@ -123,7 +123,7 @@ false == null       // false
  
 ```
 All above statements will return false when === is used.
-```bash
+```javascript
 null === undefined //false
 true === 'true'    // false
 false === undefined  // false
@@ -144,7 +144,8 @@ The Arrow functions make the code more compact and keep the lexical context of t
 ## Include 3 Parts in each test name 
 
 **Do**: A test report should tell whether the current application revision satisfies the requirements for the people who are not necessarily familiar with the code: the tester, the DevOps engineer who is deploying and the future you two years from now. This can be achieved best if the tests speak at the requirements level and include 3 parts:
-<img src="../NodeJS Best Practices/images/aaa.png" style=" width:30% ; height:30% ">
+
+
 
 1. What is being tested? For example, the ProductsService.addNewProduct method
 2. Under what circumstances and scenario? For example, no price is passed to the method
@@ -154,7 +155,7 @@ The Arrow functions make the code more compact and keep the lexical context of t
 
 Example using [Jest](https://jestjs.io/)
 
-```
+```javascript
 //1. unit under test
 describe("GET /api/getRoles", () => {
    test("it should get all the roles", async () => {
@@ -175,6 +176,7 @@ describe("GET /api/getRoles", () => {
 
 Doing It Right Example: A test name that constitutes 3 parts
 
+<img src="../NodeJS Best Practices/images/aaa.png" style=" width:50% ; height:50% ">
 
 ## Structure tests by the AAA pattern
 
@@ -187,7 +189,7 @@ Do: Structure your tests with 3 well-separated sections **Arrange, Act & Assert 
 Otherwise: Not only do you spend hours understanding the main code but what should have been the simplest part of the day (testing) stretches your brain
 
 Doing It Right Example: A test structured with the AAA pattern
-```
+```javascript
 
 describe("Customer classifier", () => {
   test("When customer spent more than 500$, should be classified as premium", () => {
@@ -205,7 +207,7 @@ describe("Customer classifier", () => {
 ```
 
 Anti-Pattern Example: No separation,one bulk,harder to interpret
-```
+```javascript
 
 test("Should be classified as premium", () => {
   const customerToClassify = { spent: 505, joined: new Date(), id: 1 };
@@ -226,7 +228,7 @@ Otherwise: The team will write less tests and decorate the annoying ones with .s
 
 Anti-Pattern Example: The reader must skim through not so short, and imperative code just to get the test story.
 
-```
+```javascript
 test("When asking for an admin, ensure only ordered admins in results", () => {
   //assuming we've added here two admins "admin1", "admin2" and "user1"
   const allAdmins = getUsers({ adminOnly: true });
@@ -256,7 +258,7 @@ test("When asking for an admin, ensure only ordered admins in results", () => {
 
 Doing It Right Example: Skimming through the following declarative test is a breeze
 
-```
+```javascript
 it("When asking for an admin, ensure only ordered admins in results", () => {
   //assuming we've added here two admins
   const allAdmins = getUsers({ adminOnly: true });
@@ -276,7 +278,7 @@ Otherwise: It will be challenging to infer from the test reports (e.g. CI report
 
 **Anti-pattern Example: A long test case that tries to assert the existence of error with try-catch**
 
-```
+```javascript
 it("When no product name, it throws error 400", async () => {
   let errorWeExceptFor = null;
   try {
@@ -293,7 +295,7 @@ it("When no product name, it throws error 400", async () => {
 
 **Doing It Right Example: A human-readable expectation that could be understood easily, maybe even by QA or technical PM**
 
-```
+```javascript
 it("When no product name, it throws error 400", async () => {
   await expect(addNewProduct({}))
     .to.eventually.throw(AppError)
@@ -314,7 +316,7 @@ Security plugins for **ESLint** and **TSLint** such as [eslint-plugin-security](
 **eslint-plugin-security example**
 
 **Some examples of unsafe practice rules detected by eslint-plugin-security:**
-```
+```javascript
 detect-pseudoRandomBytes
 const insecure = crypto.pseudoRandomBytes(5);
 
@@ -339,7 +341,7 @@ npm install --save-dev eslint-plugin-security
 ```
     npm audit 
 ```
-  <img src="../NodeJS Best Practices/images/audit.png" style=" width:30% ; height:30% ">
+  <src="../NodeJS Best Practices/images/audit.png" style=" width:30% ; height:30% ">
   
 3. Fix the vulnerability using below command 
 ```
