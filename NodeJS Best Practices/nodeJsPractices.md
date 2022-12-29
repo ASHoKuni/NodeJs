@@ -5,7 +5,7 @@ One of the hardest things for larger applications is to maintain a huge code bas
 
 Like [MVC](https://www.geeksforgeeks.org/mvc-design-pattern/) architecture
 
-<img title="a title" alt="Alt text" src="../NodeJS Best Practices/images/Components.png">
+<img src="../NodeJS Best Practices/images/Components.png" style=" width:30% ; height:30% " >
 
 
 
@@ -111,31 +111,339 @@ We should put required modules at the beginning of the and avoid putting them in
 Use the strict equality operator === instead of weaker abstract equality operator = ==. == will convert two variables to a common type then compare them while === doesn’t type case variables, and ensures that both variables are of the same type and equal.
 Example:
 ```bash
-	null == undefined   // true                    
-	true == 'true'    // false			      
-	false == undefined  // false		        
-	'' == '0'           // false			
-	false == '0'        // true			
-	0 == '0'            // true			
-	' \t\r\n ' == 0     // true			
-	0== ''             // true			
-	false == null       // false			
+null == undefined   // true                    
+true == 'true'    // false			      
+false == undefined  // false		        
+'' == '0'           // false			
+false == '0'        // true			
+0 == '0'            // true			
+' \t\r\n ' == 0     // true			
+0== ''             // true			
+false == null       // false			
  
 ```
 All above statements will return false when === is used.
 ```bash
- null === undefined //false
- true === 'true'    // false
- false === undefined  // false
- '' === '0'           // false
- false === '0'        // false
- 0 === '0'            // false
- ' \t\r\n ' === 0     // false
- 0=== ''             // false
- false === null       // false
+null === undefined //false
+true === 'true'    // false
+false === undefined  // false
+'' === '0'           // false
+false === '0'        // false
+0 === '0'            // false
+' \t\r\n ' === 0     // false
+0=== ''             // false
+false === null       // false
 
 ```
 
 ## Using Arrow Functions (=>)
 The Arrow functions make the code more compact and keep the lexical context of the root function (i.e. this). However, it is a suggestion to use async-await applications to stop the use of functional parameters when they are working with old API’s which can accept promises or callbacks.
+
+# Testing And Overall Quality Practices
+
+## Include 3 Parts in each test name 
+
+**Do**: A test report should tell whether the current application revision satisfies the requirements for the people who are not necessarily familiar with the code: the tester, the DevOps engineer who is deploying and the future you two years from now. This can be achieved best if the tests speak at the requirements level and include 3 parts:
+
+1. What is being tested? For example, the ProductsService.addNewProduct method
+2. Under what circumstances and scenario? For example, no price is passed to the method
+3. What is the expected result? For example, the new product is not approved
+
+**Otherwise**: A deployment just failed, a test named “Add product” failed. Does this tell you what exactly is malfunctioning?
+
+Example using [Jest](https://jestjs.io/)
+
+```
+//1. unit under test
+describe("GET /api/getRoles", () => {
+   test("it should get all the roles", async () => {
+   // 2. Scenario 
+     await supertest(app)
+       .get("/api/getRoles")
+       .set({ Authorization: `Bearer ${token}` })
+       .then((response) => {
+	//3. expectation
+         expect(response.statusCode).toBe(200);
+       })
+       .catch((error) => {
+         console.log(error);
+       });
+   });
+ });
+```
+
+Doing It Right Example: A test name that constitutes 3 parts
+
+
+## Structure tests by the AAA pattern
+
+Do: Structure your tests with 3 well-separated sections **Arrange, Act & Assert (AAA)**. Following this structure guarantees that the reader spends no brain-CPU on understanding the test plan:
+
+* **1st A - Arrange:** All the setup code to bring the system to the scenario the test aims to simulate. This might include instantiating the unit under test constructor, adding DB records, mocking/stubbing on objects, and any other preparation code
+* **2nd A - Act:** Execute the unit under test. Usually 1 line of code
+* **3rd A - Assert:** Ensure that the received value satisfies the expectation. Usually 1 line of code
+
+Otherwise: Not only do you spend hours understanding the main code but what should have been the simplest part of the day (testing) stretches your brain
+
+Doing It Right Example: A test structured with the AAA pattern
+```
+
+describe("Customer classifier", () => {
+  test("When customer spent more than 500$, should be classified as premium", () => {
+    //Arrange
+    const customerToClassify = { spent: 505, joined: new Date(), id: 1 };
+    const DBStub = sinon.stub(dataAccess, "getCustomer").reply({ id: 1, classification: "regular" });
+
+    //Act
+    const receivedClassification = customerClassifier.classifyCustomer(customerToClassify);
+
+    //Assert
+    expect(receivedClassification).toMatch("premium");
+  });
+});
+```
+
+Anti-Pattern Example: No separation,one bulk,harder to interpret
+```
+
+test("Should be classified as premium", () => {
+  const customerToClassify = { spent: 505, joined: new Date(), id: 1 };
+  const DBStub = sinon.stub(dataAccess, "getCustomer").reply({ id: 1, classification: "regular" });
+  const receivedClassification = customerClassifier.classifyCustomer(customerToClassify);
+  expect(receivedClassification).toMatch("premium");
+});
+```
+
+
+## Describe expectations in a product language: use BDD-style assertions
+
+
+Do: Coding your tests in a declarative-style allows the reader to get the grab instantly without spending even a single brain-CPU cycle. When you write imperative code that is packed with conditional logic, the reader is forced to exert more brain-CPU cycles. In that case, code the expectation in a human-like language, declarative BDD style using expect or should and not using custom code. If Chai & Jest doesn't include the desired assertion and it’s highly repeatable, consider extending Jest matcher (Jest) or writing a custom Chai plugin.
+
+Otherwise: The team will write less tests and decorate the annoying ones with .skip()
+
+
+Anti-Pattern Example: The reader must skim through not so short, and imperative code just to get the test story.
+
+```
+test("When asking for an admin, ensure only ordered admins in results", () => {
+  //assuming we've added here two admins "admin1", "admin2" and "user1"
+  const allAdmins = getUsers({ adminOnly: true });
+
+  let admin1Found,
+    adming2Found = false;
+
+  allAdmins.forEach(aSingleUser => {
+    if (aSingleUser === "user1") {
+      assert.notEqual(aSingleUser, "user1", "A user was found and not admin");
+    }
+    if (aSingleUser === "admin1") {
+      admin1Found = true;
+    }
+    if (aSingleUser === "admin2") {
+      admin2Found = true;
+    }
+  });
+
+  if (!admin1Found || !admin2Found) {
+    throw new Error("Not all admins were returned");
+  }
+});
+
+```
+
+
+Doing It Right Example: Skimming through the following declarative test is a breeze
+
+```
+it("When asking for an admin, ensure only ordered admins in results", () => {
+  //assuming we've added here two admins
+  const allAdmins = getUsers({ adminOnly: true });
+
+  expect(allAdmins)
+    .to.include.ordered.members(["admin1", "admin2"])
+    .but.not.include.ordered.members(["user1"]);
+});
+```
+
+## Don’t catch errors, expect them
+
+Do: When trying to **assert** that some input triggers an error, it might look right to use try-catch-finally and asserts that the catch clause was entered. The result is an awkward and verbose test case (example below) that hides the simple test intent and the result expectations
+A more elegant alternative is the using the one-line dedicated Chai assertion: expect(method).to.throw (or in **Jest: expect(method).toThrow()**). It’s absolutely mandatory to also ensure the exception contains a property that tells the error type, otherwise given just a generic error the application won’t be able to do much rather than show a disappointing message to the user.
+
+Otherwise: It will be challenging to infer from the test reports (e.g. CI reports) what went wrong.
+
+**Anti-pattern Example: A long test case that tries to assert the existence of error with try-catch**
+
+```
+it("When no product name, it throws error 400", async () => {
+  let errorWeExceptFor = null;
+  try {
+    const result = await addNewProduct({});
+  } catch (error) {
+    expect(error.code).to.equal("InvalidInput");
+    errorWeExceptFor = error;
+  }
+  expect(errorWeExceptFor).not.to.be.null;
+  //if this assertion fails, the tests results/reports will only show
+  //that some value is null, there won't be a word about a missing Exception
+});
+```
+
+**Doing It Right Example: A human-readable expectation that could be understood easily, maybe even by QA or technical PM**
+
+```
+it("When no product name, it throws error 400", async () => {
+  await expect(addNewProduct({}))
+    .to.eventually.throw(AppError)
+    .with.property("code", "InvalidInput");
+});
+
+```
+# Security Best Practices
+
+## Embrace linter security rules
+
+Make use of security-related linter plugins such as [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security) to catch security vulnerabilities and issues as early as possible, preferably while they're being coded. This can help catching security weaknesses like using **eval, invoking a child process or importing a module** with a string literal (e.g. user input).
+
+ What could have been a straightforward security weakness during development becomes a major issue in production. Also, the project may not follow consistent code security practices, leading to vulnerabilities being introduced, or sensitive secrets committed into remote repositories.
+
+Security plugins for **ESLint** and **TSLint** such as [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security) and [tslint-config-security](https://www.npmjs.com/package/tslint-config-security) offer code security checks based on a number of known vulnerabilities, such as unsafe **RegEx**, unsafe use of **eval()**, and non-literal filenames being used when accessing the file system within an application. The use of git hooks such as [pre-git](https://github.com/bahmutov/pre-git) allows to further enforce any rules on source control before they get distributed to remotes, one of which can be to check that no secrets were added to source control.
+
+**eslint-plugin-security example**
+
+**Some examples of unsafe practice rules detected by eslint-plugin-security:**
+```
+detect-pseudoRandomBytes
+const insecure = crypto.pseudoRandomBytes(5);
+
+detect-non-literal-fs-filename
+const path = req.body.userinput;
+fs.readFile(path);
+detect-eval-with-expression
+const userinput = req.body.userinput;
+eval(userinput);
+
+detect-non-literal-regexp
+const unsafe = new RegExp('/(x+x+)+y/)');
+```
+
+**Eslint-plugin-security installtion**
+
+1. Install  [eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security)
+```
+npm install --save-dev eslint-plugin-security
+```
+2. Scan all **vulnerabilities**
+```
+    npm audit 
+```
+  <img src="" style="">
+  
+3. Fix the vulnerability using below command 
+```
+   npm audit fix --force
+   ```
+## Limit concurrent requests using a middleware
+
+DOS attacks are very popular and relatively easy to conduct. Implement rate limiting using an external service such as cloud load balancers, cloud firewalls, nginx, [rate-limiter-flexible](https://www.npmjs.com/package/rate-limiter-flexible) package, or (for smaller and less critical apps) a rate-limiting middleware (e.g. [express-rate-limit](https://www.npmjs.com/package/express-rate-limit))
+
+An application could be subject to an attack resulting in a denial of service where real users receive a degraded or unavailable service.
+
+Rate limiting should be implemented in your application to protect a Node.js application from being overwhelmed by **too many requests at the same time**. Rate limiting is a task best performed with a service designed for this task, such as nginx, however it is also possible with [rate-limiter-flexible](https://www.npmjs.com/package/rate-limiter-flexible) package or middleware such as [express-rate-limiter](https://www.npmjs.com/package/express-rate-limit) for Express.js applications.
+
+
+Code Example : Node.js  app with [rate-limiter-flexible ](https://www.npmjs.com/package/rate-limiter-flexible)
+
+```javascript
+const http = require('http');
+const redis = require('redis');
+const { RateLimiterRedis } = require('rate-limiter-flexible');
+
+const redisClient = redis.createClient({
+ enable_offline_queue: false,
+});
+
+// Maximum 20 requests per second
+const rateLimiter = new RateLimiterRedis({
+ storeClient: redisClient,
+ points: 20,
+ duration: 1,
+ blockDuration: 2, // block for 2 seconds if consumed more than 20 points per second
+});
+
+http.createServer(async (req, res) => {
+  try {
+  const rateLimiterRes = await rateLimiter.consume(req.socket.remoteAddress);
+  // Some app logic here
+
+  res.writeHead(200);
+  res.end();
+  } catch {
+  res.writeHead(429);
+  res.end('Too Many Requests');
+  }
+})
+ .listen(3000);
+```
+
+You can find more examples in the [documentation](https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example).
+
+## Extract secrets from config files or use packages to encrypt them
+
+Never store **plain-text secrets** in configuration files or source code. Instead, make use of secret-management systems like Vault products, Kubernetes/Docker Secrets, or using environment variables. As a last resort, secrets stored in source control must be encrypted and managed (rolling keys, expiring, auditing, etc). Make use of **pre-commit/push hooks** to prevent committing secrets accidentally.
+
+Source control, even for private repositories, can mistakenly be made public, at which point all secrets are exposed. Access to source control for an external party will inadvertently provide access to related systems (databases, apis, services, etc).
+The most common and secure way to provide a **Node.js** application access to keys and secrets is to store them using **environment variables** on the system where it is being run. Once set, these can be accessed from the **global process.env object**. A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be made open source at any moment, without compromising any credentials.
+For rare situations where secrets do need to be stored inside source control, using a package such as [cryptr ](https://www.npmjs.com/package/cryptr)allows these to be stored in an encrypted form as opposed to in plain text.
+
+
+Example 
+
+Accessing an API key stored in an environment variable:
+
+```
+ const azure = require('azure');
+
+ const apiKey = process.env.AZURE_STORAGE_KEY;
+ const blobService = azure.createBlobService(apiKey);
+```
+
+Using [cryptr](https://www.npmjs.com/package/cryptr) to store an encrypted secret:
+```
+
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.SECRET);
+ 
+let accessToken = cryptr.decrypt('e74d7c0de21e72aaffc8f2eef2bdb7c1');
+ 
+console.log(accessToken);  // outputs decrypted string which was not stored in source control
+
+```
+## Adjust the HTTP response headers for enhanced security
+
+Your application should be using secure headers to prevent attackers from using common attacks like cross-site scripting (XSS), clickjacking and other malicious attacks. These can be configured easily using modules like [helmet](https://www.npmjs.com/package/helmet)
+
+Attackers could perform direct attacks on your application's users, leading to huge security vulnerabilities.
+
+
+**Install helmet**
+```
+npm  i helmet
+```
+
+Example:
+```
+const express = require("express");
+const helmet = require("helmet");
+
+const app = express();
+app.use(helmet()); 
+
+```
+Ref :  
+
+[Read on OWASP Secure Headers Project](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xfo)
+
+[Node.js Security Checklist (RisingStack)](https://blog.risingstack.com/node-js-security-checklist/)
 
