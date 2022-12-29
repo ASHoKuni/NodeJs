@@ -51,7 +51,7 @@ First create a test/unit  folder in your project directory.
 
 As per below screenshot.
 
-<img title="a title" alt="Alt text" src="../APITest/images/test.png" width="200" height="400">
+<img title="a title" alt="Alt text" src="../APITest/images/test.png" width="100%" height="100%">
  
 #### Setup  Packages 
 * [Jest](https://jestjs.io/)
